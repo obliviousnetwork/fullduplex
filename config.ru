@@ -30,5 +30,8 @@ run do |env|
     stream.close(error)
   end
 
-  [200, {'content-type' => 'message/ohttp-chunked-res'}, body]
+  [200, {
+    "Content-Type" => "message/ohttp-chunked-res",
+    "Incremental" => "?1"
+  }, body]
 end

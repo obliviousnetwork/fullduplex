@@ -20,7 +20,6 @@ Async do |task|
   response = client.post("/fullduplex", body: body, headers: {
     "Content-Type" => "message/ohttp-chunked-req",
     "Incremental" => "?1",
-    "Transfer-Encoding" => "chunked"
   })
 
   response.each do |chunk|

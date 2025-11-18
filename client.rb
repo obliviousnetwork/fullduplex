@@ -2,7 +2,7 @@
 
 require 'async/http'
 
-url = ARGV.pop || "https://localhost:9292"
+url = ARGV.pop || "https://fullduplex.fly.dev"
 endpoint = Async::HTTP::Endpoint.parse(url)
 
 Async do |task|

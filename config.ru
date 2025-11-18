@@ -1,6 +1,11 @@
 require 'async/redis'
 
-client = Async::Redis::Client.new
+if ENV.key?("REDIS_URL")
+  endpoint = Async::Redis::Endpoint.parse(ENV["REDIS_URL"])
+  client = Async::Redis::Client.new(endpoint)
+else
+  client = Async::Redis::Client.new
+end
 
 run do |env|
   body = proc do |stream|

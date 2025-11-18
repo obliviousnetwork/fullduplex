@@ -37,4 +37,4 @@ COPY --chown=ruby:ruby . .
 
 # Start the server
 EXPOSE 8080
-CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["bundle", "exec", "falcon", "--bind", "http://0.0.0.0", "--port", "8080"]

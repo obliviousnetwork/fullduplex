@@ -1,5 +1,5 @@
-ARG RUBY_VERSION=3.4.5
-FROM ruby:$RUBY_VERSION-slim as base
+ARG RUBY_VERSION=3.4.7
+FROM ruby:$RUBY_VERSION-slim AS base
 
 # Rack app lives here
 WORKDIR /app

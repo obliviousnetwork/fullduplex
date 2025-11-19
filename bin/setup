@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -euo pipefail
+set -vx
+
+bundle config set path .bundle
+bundle install

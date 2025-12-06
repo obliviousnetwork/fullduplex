@@ -49,10 +49,11 @@ def error_body(status)
 end
 
 run do |env|
+  puts "got PATH_INFO #{env["PATH_INFO"]}"
   case env["PATH_INFO"]
   when /\d\d\d/
-    status = env["PATH_INFO"][1..-1]
-    puts "got status #{status}, will return #{status.to_i}"
+    status = env["PATH_INFO"][1..-1].to_i
+    puts "returning status #{status}"
     [status.to_i, {
       "Content-Type" => "message/ohttp-chunked-res",
       "Incremental" => "?1"

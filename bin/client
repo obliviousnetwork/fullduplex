@@ -17,7 +17,7 @@ Async do |task|
     body.close_write
   end
 
-  response = client.post("/fullduplex", body: body, headers: {
+  response = client.post((endpoint.path || "/fullduplex"), body: body, headers: {
     "Content-Type" => "message/ohttp-chunked-req",
     "Incremental" => "?1",
   })

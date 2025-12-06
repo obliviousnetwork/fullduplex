@@ -36,11 +36,6 @@ def error_body(status)
     writer = Async do
       stream.write("Returning HTTP status #{status}")
     end
-
-    stream.each do |message|
-      # Read messages from the client and publish them to the redis channel:
-      puts "got message #{message}"
-    end
   rescue => error
   ensure
     writer&.stop

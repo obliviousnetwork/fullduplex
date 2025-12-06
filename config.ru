@@ -31,10 +31,19 @@ def streaming_body(client)
   end
 end
 
-def error_body(status)
+def error_body(status, client)
   proc do |stream|
     writer = Async do
-      stream.write("Returning HTTP status #{status}")
+      stream.puts("Returning HTTP status #{status}")
+      client.subscribe("chat") do |context|
+        context.each do |type, name, message|
+          stream.write(message)
+        end
+      end
+    end
+    stream.each do |message|
+      puts "got message #{message}"
+      client.publish("chat", message.upcase)
     end
   rescue => error
   ensure
@@ -52,7 +61,7 @@ run do |env|
     [status.to_i, {
       "Content-Type" => "message/ohttp-chunked-res",
       "Incremental" => "?1"
-    }, error_body(status)]
+    }, error_body(status, client)]
   else
     [200, {
       "Content-Type" => "message/ohttp-chunked-res",

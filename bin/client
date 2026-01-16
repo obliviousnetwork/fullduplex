@@ -2,7 +2,7 @@
 
 require 'async/http'
 
-url = ARGV.pop || "https://relay.oblivious.network"
+url = ARGV.pop
 endpoint = Async::HTTP::Endpoint.parse(url)
 
 Async do |task|
@@ -10,20 +10,25 @@ Async do |task|
   body = Protocol::HTTP::Body::Writable.new
 
   input_task = task.async do
-    while line = $stdin.gets
-      body.write(line)
+    1.upto(50) do |i|
+      body.write("object #{i}")
+      sleep 1
     end
+    $stdin.gets
+    # while line = $stdin.gets
+    #   body.write(line)
+    # end
   ensure
     body.close_write
   end
 
-  response = client.post((endpoint.path || "/fullduplex"), body: body, headers: {
+  response = client.post((endpoint.path), body: body, headers: {
     "Content-Type" => "message/ohttp-chunked-req",
     "Incremental" => "?1",
   })
 
   response.each do |chunk|
-    $stdout.write("> #{chunk}")
+    $stdout.write("> #{chunk}\n")
   end
 ensure
   input_task&.stop

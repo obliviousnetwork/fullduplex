@@ -8,11 +8,14 @@ else
 end
 
 def streaming_body(client)
+  deadline = Time.now + 50
+
   proc do |stream|
     subscription_task = Async do
       # Subscribe to the redis channel and forward messages to the client:
       client.subscribe("chat") do |context|
         context.each do |type, name, message|
+          sleep 1 until deadline < Time.now
           stream.write(message)
         end
       end

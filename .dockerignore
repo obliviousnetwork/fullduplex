@@ -1,3 +1,6 @@
 # flyctl launch added from .jj/.gitignore
 .jj/*
 fly.toml
+.bundle/*
+.github/*
+.git/*

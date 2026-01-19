@@ -2,7 +2,7 @@
 
 require 'async/http'
 
-url = ARGV.pop
+url = ARGV.pop || "https://relay2.oblivious.network/fullduplex"
 endpoint = Async::HTTP::Endpoint.parse(url)
 
 Async do |task|
@@ -22,7 +22,7 @@ Async do |task|
     body.close_write
   end
 
-  response = client.post((endpoint.path), body: body, headers: {
+  response = client.post(endpoint.path, body: body, headers: {
     "Content-Type" => "message/ohttp-chunked-req",
     "Incremental" => "?1",
   })

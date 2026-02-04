@@ -29,7 +29,7 @@ Async do |task|
   })
 
   response.each do |chunk|
-    $stdout.write("[#{Time.now.iso8601}] > #{chunk}\n")
+    $stdout.write("[#{Time.now.iso8601}] > #{chunk.chomp}\n")
   end
 ensure
   input_task&.stop

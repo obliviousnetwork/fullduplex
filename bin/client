@@ -11,7 +11,8 @@ Async do |task|
 
   input_task = task.async do
     1.upto(50) do |i|
-      body.write("object #{i}")
+      puts "[#{Time.now.iso8601}] < object #{i}"
+      body.write("object #{i}\n")
       sleep 1
     end
     $stdin.gets
@@ -28,7 +29,7 @@ Async do |task|
   })
 
   response.each do |chunk|
-    $stdout.write("> #{chunk}\n")
+    $stdout.write("[#{Time.now.iso8601}] > #{chunk}\n")
   end
 ensure
   input_task&.stop
